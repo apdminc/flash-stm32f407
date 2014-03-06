@@ -10,7 +10,11 @@
  * @brief Number of sectors in the flash memory.
  */
 #if !defined(FLASH_SECTOR_COUNT) || defined(__DOXYGEN__)
+#ifdef STM32F427_437xx
+#define FLASH_SECTOR_COUNT 23
+#else
 #define FLASH_SECTOR_COUNT 12
+#endif
 #endif
 
 /* Error codes */

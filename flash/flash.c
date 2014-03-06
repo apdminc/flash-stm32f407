@@ -4,11 +4,11 @@
 
 size_t flashSectorSize(flashsector_t sector)
 {
-    if (sector >= 0 && sector <= 3)
+    if ((sector >= 0 && sector <= 3) || (sector >= 12 && sector <= 15))
         return 16 * 1024;
-    else if (sector == 4)
+    else if (sector == 4 || sector == 16)
         return 64 * 1024;
-    else if (sector >= 5 && sector <= 11)
+    else if ((sector >= 5 && sector <= 11) || (sector >= 17 && sector <= 23))
         return 128 * 1024;
     return 0;
 }
