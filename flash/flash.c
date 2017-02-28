@@ -1,10 +1,11 @@
 
 #include "flash.h"
 #include <string.h>
+#include "error_log.h"
 
 size_t flashSectorSize(flashsector_t sector)
 {
-    if ((sector >= 0 && sector <= 3) || (sector >= 12 && sector <= 15))
+    if ((sector <= 3) || (sector >= 12 && sector <= 15))
         return 16 * 1024;
     else if (sector == 4 || sector == 16)
         return 64 * 1024;
@@ -183,6 +184,10 @@ int flashRead(flashaddr_t address, char* buffer, size_t size)
 
 static void flashWriteData(flashaddr_t address, const flashdata_t data)
 {
+  if( address < 0x08020000 || address > (0x08020000 + 0x20000) ) {
+    error_log_set_error_state(ERROR_STATE_FL_WR_ADDR, true);
+  }
+
     /* Enter flash programming mode */
     FLASH->CR |= FLASH_CR_PG;
 
